@@ -1,12 +1,16 @@
 import './App.css';
+import BackgroundVideo from './components/BackgroundVideo';
 import Card from './components/Card.jsx';
 import Cards from './components/Cards.jsx';
 import SearchBar from './components/SearchBar.jsx';
 import characters, { Rick } from './data.js';
 
+
 function App() {
    return (
       <div className='App'>
+         <BackgroundVideo url = 'https://videos.files.wordpress.com/df9rs4O0/rick-1.mp4'></BackgroundVideo>
+         
          <SearchBar onSearch={(characterID) => window.alert(characterID)} />
          <Cards characters={characters} />
          <Card
@@ -18,7 +22,7 @@ function App() {
             origin={Rick.origin.name}
             image={Rick.image}
             onClose={() => window.alert('Emulamos que se cierra la card')}
-         />
+         />     
       </div>
    );
 }
