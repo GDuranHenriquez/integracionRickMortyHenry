@@ -1,9 +1,11 @@
 import React from "react";
+import rick_one from '../assets/fondos/rick_one.mp4'
 
-export default function BackgroundVideo(props){
+export default function BackgroundVideo(){
   return (<div className='backgroundVideo'>
+    <div className="overly"></div>
     <video 
-      src = {props.url} 
+      src = {rick_one} 
       autoPlay 
       loop 
       muted 

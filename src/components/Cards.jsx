@@ -1,7 +1,23 @@
 import Card from './Card';
+import styled from "styled-components";
+
+const DivContainer = styled.div`
+   max-width: 80%;
+   display: flex;
+   padding: 10px;
+   margin: 0px auto;
+   justify-content: center;
+   flex-wrap: wrap;
+
+   .container-cards {
+      max-width: 100%;
+      display: flex;
+   }
+`
 
 export default function Cards(props) {
-   return <div>
+   return <DivContainer>
+      
       {props.characters.map((elem) => 
          (<Card
             key ={elem.id}
@@ -14,5 +30,6 @@ export default function Cards(props) {
             onClose={() => window.alert('Emulamos que se cierra la card')}
          />)
       )}
-   </div>;
+      
+   </DivContainer>;
 }

@@ -9,11 +9,11 @@ import characters, { Rick } from './data.js';
 function App() {
    return (
       <div className='App'>
-         <BackgroundVideo url = 'https://videos.files.wordpress.com/df9rs4O0/rick-1.mp4'></BackgroundVideo>
+         <BackgroundVideo ></BackgroundVideo>
          
          <SearchBar onSearch={(characterID) => window.alert(characterID)} />
          <Cards characters={characters} />
-         <Card
+         {/* <Card
             id={Rick.id}
             name={Rick.name}
             status={Rick.status}
@@ -22,7 +22,7 @@ function App() {
             origin={Rick.origin.name}
             image={Rick.image}
             onClose={() => window.alert('Emulamos que se cierra la card')}
-         />     
+         />  */}    
       </div>
    );
 }
