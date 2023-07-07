@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import imgBackName from '../assets/fondos/card/name.jpg'
 import imgBackData from '../assets/fondos/card/data.jpg' 
+import { Link } from "react-router-dom";
 
 
 const DivCard = styled.div`
@@ -9,8 +10,8 @@ const DivCard = styled.div`
    flex-direction: column;
    position: relative;
    margin: 8px;
-   width: 200px;
-   height: 300px;
+   width: 240px;
+   height: 350px;
    color: white;
    border-radius: 10px;
    border: 1px solid rgba(255, 255, 255, 0.3);
@@ -20,14 +21,18 @@ const DivCard = styled.div`
    }
 
    .name-person {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       background-size: 100% 100%;
       background-repeat:no-repeat;
       background-size: cover;
       width: 100%;
-      height: 50px;
+      height: 80px;
       border-radius: 10px 10px 0 0;
       border-bottom: 1px solid;
-      }
+      
+   }
 
    button{
       pading: 2px;
@@ -46,6 +51,7 @@ const DivCard = styled.div`
       width: 100%;
       height: 100%;
       border-radius: 0 0 10px 10px;
+      background-position: center;
       }
 
    .data-person > img{
@@ -86,16 +92,24 @@ const DivCard = styled.div`
       grid-row: 1;
       border-bottom: 1px solid;
     }
-    .data-card > .three {
+   .data-card > .three {
       grid-column: 1;
       grid-row: 2;
       
-    }
-    .data-card > .four {
+   }
+   .data-card > .four {
       grid-column: 2;
       grid-row: 2;
       
-    }
+   }
+
+   .link{
+      width: 80%;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+   }
 
 
 `;
@@ -103,11 +117,14 @@ const DivCard = styled.div`
 export default class Card extends React.Component {
    render(){
       const data = this.props;
+      const id = data.id
       return (
          <DivCard>
-            <button onClick={data.onClose}>X</button>
+            <button onClick={() => {data.onClose(data.id)}}>X</button>
             <div className="name-person" style= {{backgroundImage: `url(${imgBackName})`}}>
-               <h2>{data.name}</h2>         
+               <Link to={`/detail/${id}`} className="link">
+                  <h3>{data.name}</h3>         
+               </Link>
             </div> 
             <div className="data-person" style= {{backgroundImage: `url(${data.image})`}}>
                {/* <img src = {data.image} alt= 'img'></img> */}
@@ -115,10 +132,7 @@ export default class Card extends React.Component {
                   <div className="one"><h2>{data.status}</h2></div>
                   <div className="two"><h2>{data.species}</h2></div>
                   <div className="three"><h2>{data.gender}</h2></div>
-                  <div className="four"><h2>{data.origin}</h2></div>
-                  
-                  
-                  
+                  <div className="four"><h2>{data.origin}</h2></div>              
                   
                </div>
                           

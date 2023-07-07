@@ -5,7 +5,7 @@ const DivContainer = styled.div`
    max-width: 80%;
    display: flex;
    padding: 10px;
-   margin: 0px auto;
+   margin: 120px auto;
    justify-content: center;
    flex-wrap: wrap;
 
@@ -21,13 +21,14 @@ export default function Cards(props) {
       {props.characters.map((elem) => 
          (<Card
             key ={elem.id}
+            id = {elem.id}
             name={elem.name}
             status={elem.status}
             species={elem.species}
             gender={elem.gender}
             origin={elem.origin.name}
             image={elem.image}
-            onClose={() => window.alert('Emulamos que se cierra la card')}
+            onClose={props.onClose}
          />)
       )}
       
