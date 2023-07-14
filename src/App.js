@@ -10,9 +10,11 @@ import About from './components/About.jsx';
 import Detail from './components/Detail.jsx'
 import Forms from './components/Forms.jsx';
 import Nav from './components/Nav.jsx';
+import Favoritos from './components/Favoritos';
 /* import PageNotFound from './components/PageNotFound'; */
 /* import SearchBar from './components/SearchBar.jsx'; */
 /* import characters, { Rick } from './data.js'; */
+
 
 
 
@@ -55,9 +57,9 @@ function App() {
          return alert(`Este personaje con id:${id} se encuentra ya agregado.`)
       }         
       
-      axios(`https://rickandmortyapi.com/api/character/${id}`).then(({ data }) => {
-         if (data.name) {
-            setCharacters((characters) => [...characters, data]);
+      axios(`http://localhost:3001/rickandmorty/character/:${id}`).then(({ data }) =>{  
+      if (data.length > 0) {
+            setCharacters((characters) => [...characters, data[0]]);
          } else {
           alert('¡No hay personajes con este ID!');
          }
@@ -86,6 +88,7 @@ function App() {
       id = parseInt(id)
       const newCharacters = characters.filter(character => character.id !== id);
       setCharacters(newCharacters)
+
    }
 
    const addCardRandom = ()=>{
@@ -114,6 +117,7 @@ function App() {
             <Route path='/home' element = {<Cards characters={characters} onClose = {onClose}/>} />
             <Route path='/about' element = {<About></About>} />
             <Route path='/detail/:id' element= {<Detail></Detail>}></Route>
+            <Route path='/favorites' element= {<Favoritos onClose = {onClose} ></Favoritos>}></Route>
 
             {/* <Route path='/*' element={<PageNotFound></PageNotFound>}></Route> */}
             {/* <Route path="*" element={<Navigate to="/404" />} /> */}

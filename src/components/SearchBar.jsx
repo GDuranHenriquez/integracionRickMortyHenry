@@ -95,9 +95,7 @@ export default function SearchBar(props) {
 
    const  handleChange = (e) =>{
       const idInput = e.target.value;
-      if(idInput !== ''){
-         setId(idInput);
-      }           
+      setId(idInput);           
    };
    const handleClick = () => {
       inpSearchRef.current.focus();
@@ -112,6 +110,8 @@ export default function SearchBar(props) {
             <NavbarLink to='/home' className={({ isActive}) => isActive ? "active" : undefined} >HOME</NavbarLink>
 
             <NavbarLink to='/create' className={({ isActive}) => isActive ? "active" : undefined} >ADD CHARACTER</NavbarLink>
+
+            <NavbarLink to='/favorites' className={({ isActive}) => isActive ? "active" : undefined} >FAVORITES</NavbarLink>
          </div>        
 
          <div className = 'divSearch'>

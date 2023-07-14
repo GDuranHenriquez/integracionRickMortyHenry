@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import imgBackName from '../assets/fondos/card/name.jpg'
 import imgBackData from '../assets/fondos/card/data.jpg' 
 import { Link } from "react-router-dom";
+import { addFavorite, removeFavorite } from "../redux/actions/actions";
+import { connect } from "react-redux"; 
 
 
 const DivCard = styled.div`
@@ -20,6 +22,18 @@ const DivCard = styled.div`
       box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 0.6);
    }
 
+   .btnFavorite{
+      padding: 2px;
+      border-radius: 10px;
+      background: none;
+      background-color: none;
+      position: absolute;
+      height: 25px;
+      width: 25px;
+      top: 1px; 
+      left: 1px;
+   }
+
    .name-person {
       display: flex;
       flex-wrap: wrap;
@@ -34,14 +48,17 @@ const DivCard = styled.div`
       
    }
 
-   button{
-      pading: 2px;
+   .btnRemoveCard{
+      padding: 2px;
       border-radius: 10px;
       border: 1px solid;
       background-color: #86F533;
       position: absolute;
       top: 1px; 
       right: 1px;
+      height: 20px;
+      width: 20px;
+
    }
 
    .data-person{
@@ -114,13 +131,54 @@ const DivCard = styled.div`
 
 `;
 
-export default class Card extends React.Component {
-   render(){
-      const data = this.props;
-      const id = data.id
+function Card(props){
+      const data = {id: props.id,
+      name: props.name,
+      status: props.status,
+      species: props.species,
+      gender: props.gender,
+      origin: props.origin,
+      image: props.image,
+      onClose: props.onClose};
+
+      const id = data.id;
+      const [isFav, setIsFav] = useState(false);
+
+      function handleFavorite(){
+         if(isFav){
+            setIsFav(false);
+            props.removeFavorite(Number(id))
+         }else{
+            setIsFav(true);
+            props.addFavorite(data)
+         }
+      };
+
+      useEffect(() => {
+         props.myFavorites.forEach((fav) => {
+            if (fav.id === props.id) {
+               setIsFav(true);
+            }
+         });
+      }, [props.myFavorites]);
+
+      function onCloseANDFavorite(idCharacter){
+         data.onClose(idCharacter);
+         if(isFav){
+            setIsFav(false);
+            props.removeFavorite(Number(idCharacter))
+         }
+      }
+
       return (
          <DivCard>
-            <button onClick={() => {data.onClose(data.id)}}>X</button>
+            {isFav?(
+                  <button onClick={handleFavorite}  className="btnFavorite">❤️</button>
+               ):(
+                  <button onClick={handleFavorite}  className="btnFavorite">🤍</button>
+               )}
+
+            <button onClick={() => {onCloseANDFavorite(data.id)}} className="btnRemoveCard">X</button>
             <div className="name-person" style= {{backgroundImage: `url(${imgBackName})`}}>
                <Link to={`/detail/${id}`} className="link">
                   <h3>{data.name}</h3>         
@@ -139,5 +197,28 @@ export default class Card extends React.Component {
             </div>           
          </DivCard>
       );
+};
+
+//
+export function mapDispatchToProps(dispatch){
+   return{
+      addFavorite: function(character){
+         //enviando una accion al reducer
+         //const objAction = addFavorite(character)
+         dispatch(addFavorite(character));
+      }, 
+      removeFavorite: function(id){
+         dispatch(removeFavorite(id));
+      }
+   };
+};
+
+export function mapStateToProps(globalState){
+   return {
+      myFavorites: globalState.myFavorites,
    }
 }
+
+//Voy a enviar nuevas props
+//connet('Recibir estados', 'despacho acciones')
+export default connect(mapStateToProps, mapDispatchToProps)(Card)
